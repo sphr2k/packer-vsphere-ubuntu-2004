@@ -1,8 +1,6 @@
 # packer-vsphere-ubuntu.20.04
 
-[Packer][] template for building Ubuntu 20.04 LTS (Focal Fossa) on vSphere infrastructure. 
-
-Based on Nick Charlton's article [_Automating Ubuntu 20.04 installs with Packer_][1].
+[Packer][] template for building Ubuntu 20.04 LTS (Focal Fossa) on vSphere infrastructure. Based on Nick Charlton's article [_Automating Ubuntu 20.04 installs with Packer_][1].
 
 ## Usage
 
