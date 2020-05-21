@@ -1,0 +1,17 @@
+#cloud-config
+autoinstall:
+  version: 1
+  early-commands:
+   - sudo systemctl stop ssh
+  locale: en_US
+  keyboard:
+    layout: de
+  identity:
+    hostname: ubuntu2004
+    username: ubuntu
+    password: $6$FlusLrHJjt9N$ShVLkYgDp5UgCJS532RCprAF3TngaN5lrieXfprXN71WJe4toGUWNZ81Sm4Y3XVH6XIxT/LLsbkiX8DZIpORu0
+  ssh:
+    install-server: true
+    allow-pw: yes
+    authorized-keys:
+     - <optionally add ssh keys here>

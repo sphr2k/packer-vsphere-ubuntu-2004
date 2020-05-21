@@ -1,0 +1,78 @@
+{
+    "variables": {
+        "vm_name": "Ubuntu2004",
+        "vcenter_address": "vcenter.host.name",
+        "vcenter_user": "user@domain.name",
+        "vcenter_password": "<vCenter Password>",
+        "vcenter_dc": "<Datacenter Name>",
+        "vcenter_cluster": "<Cluster Name>",
+        "esx_host": "esx.host.name",
+        "vcenter_datastore": "<Store Name>",
+        "vcenter_network": "VM Network",
+        "vcenter_ignore_ssl": "true"
+    },
+    "sensitive-variables": [
+        "vcenter_password"
+    ],
+  "builders": [
+    {
+      "type": "vsphere-iso",
+      "name": "{{ user `vm_name` }}",
+
+      "vcenter_server": "{{ user `vcenter_address` }}",
+      "username": "{{ user `vcenter_user` }}",
+      "password": "{{ user `vcenter_password` }}",
+      "insecure_connection": "{{ user `vcenter_ignore_ssl` }}",
+
+      "cluster": "{{ user `vcenter_cluster` }}",
+      "host": "{{ user `esx_host` }}",
+      "datacenter": "{{ user `vcenter_dc` }}",
+      "datastore": "{{ user `vcenter_datastore` }}",
+      "network": "{{ user `vcenter_network` }}",
+
+      "vm_name": "{{ user `vm_name` }}",
+      "guest_os_type": "ubuntu64Guest",
+      "convert_to_template": true,
+
+      "iso_urls": [
+         "http://releases.ubuntu.com/20.04/ubuntu-20.04-live-server-amd64.iso"
+      ],
+      "iso_checksum": "caf3fd69c77c439f162e2ba6040e9c320c4ff0d69aad1340a514319a9264df9f",
+      "iso_checksum_type": "sha256",
+
+      "ssh_username": "ubuntu",
+      "ssh_password": "ubuntu",
+
+      "http_directory": "http",
+
+      "CPUs": 2,
+      "RAM": 2048,
+
+      "disk_size": 8192,
+      "disk_controller_type": "pvscsi",
+      "disk_thin_provisioned": true,
+      "network_card": "vmxnet3",
+
+      "boot_wait": "2s",
+        "boot_command": [
+            "<esc><esc><esc>",
+            "<enter><wait>",
+            "/casper/vmlinuz ",
+            "root=/dev/sr0 ",
+            "initrd=/casper/initrd ",
+            "autoinstall ",
+            "ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/",
+            "<enter>"
+
+
+      ]
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": ["ls /"]
+    }
+  ]
+}
